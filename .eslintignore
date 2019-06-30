@@ -1,0 +1,18 @@
+node_modules
+var
+vendor
+docker
+config
+bin
+
+# Build directory
+public/
+
+# misc
+.env
+.env.dev
+.env.qa
+.env.stg
+.env.prod
+webpack.config.js
+webpack.config.serverside.js
