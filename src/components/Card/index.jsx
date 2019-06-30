@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 
 // utils
 import { PLAYER_IMAGE_MAP, METHOD_COMPONENT_MAP } from '../../utils/maps'
-import { COLORS } from '../../utils/styledHelpers'
+import { COLORS, MQ } from '../../utils/styledHelpers'
 
 // components
 import ActionIndicator from '../ActionIndicator'
@@ -21,7 +21,11 @@ const CardContainer = styled.div`
 	margin: 20px 0;
 	max-width: 500px;
 	transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-	width: 100%;
+	width: 90%;
+
+	${MQ.S} {
+		width: 100%;
+	}
 `
 
 const CardHeader = styled.div`
@@ -36,9 +40,14 @@ const CardHeader = styled.div`
 const CardBody = styled.div`
 	align-items: center;
 	display: flex;
-	flex-direction: row;
-	justify-content: center;
+	flex-direction: column;
 	margin: 20px 0;
+
+	${MQ.S} {
+		align-items: center;
+		flex-direction: row;
+		justify-content: center;
+	}
 `
 
 const MethodText = styled.div`

@@ -2,75 +2,54 @@ import { useState, useEffect } from 'react'
 import { getFeed } from '../utils/api'
 import { toast } from 'react-toastify'
 
+async function fetchData({ setHasError, setErrorStatus, setHasFetchedSuccessfully, setData, hasFetchedSuccessfully }) {
+	const response = await getFeed()
+
+	if (response && response.data && response.data.status === 'failed') {
+		toast(`Failed: ${response.data.reason}.  Page will refresh automatically in 5 seconds.`)
+		setHasError(true)
+		return
+	}
+
+	if (response.status === 'error') {
+		setHasError(true)
+		return
+	}
+
+	if (response && response.data && response.data.status === 'successful') {
+		setHasFetchedSuccessfully(true)
+		setData(response)
+	}
+}
+
 function useFeed() {
 	const [feedData, setFeedData] = useState([])
 	const [feedDataQueue, setFeedDataQueue] = useState([])
 	const [hasError, setHasError] = useState(false)
-	const [errorStatus, setErrorStatus] = useState(null)
-	const [errorMessage, setErrorMessage] = useState('')
 	const [hasFetchedSuccessfully, setHasFetchedSuccessfully] = useState(false)
 
 	useEffect(() => {
-		const fetchData = async () => {
-			const response = await getFeed()
-
-			if (response && response.data && response.data.status === 'failed') {
-				toast(`Failed: ${response.data.reason}`)
-				setHasError(true)
-				setErrorStatus(response.data.status)
-				setErrorMessage(response.data.reason)
-				return
-			}
-
-			if (response.status === 'error') {
-				setHasError(true)
-				setErrorStatus(response.status)
-				setErrorMessage(response.message)
-				return
-			}
-
-			if (response && response.data && response.data.status === 'successful') {
-				setHasFetchedSuccessfully(true)
-				setFeedData(response.data.payload)
-			}
+		const handleInitSet = response => {
+			setHasFetchedSuccessfully(true)
+			setFeedData(response.data.payload)
 		}
 
-		fetchData()
-	}, [setFeedData])
+		fetchData({ setHasError, setHasFetchedSuccessfully, setData: handleInitSet, hasFetchedSuccessfully })
+	}, [hasFetchedSuccessfully, setFeedData])
 
 	useEffect(() => {
-		const fetchData = async () => {
-			const response = await getFeed()
-
-			if (response && response.data && response.data.status === 'failed') {
-				toast(`Failed: ${response.data.reason}`)
-				setHasError(true)
-				setErrorStatus(response.data.status)
-				setErrorMessage(response.data.reason)
-				return
+		const handleRefreshDataSet = response => {
+			if (!hasFetchedSuccessfully) {
+				setFeedData([...feedDataQueue, ...response.data.payload])
+			} else {
+				setFeedDataQueue([...feedDataQueue, ...response.data.payload])
 			}
 
-			if (response.status === 'error') {
-				setHasError(true)
-				setErrorStatus(response.status)
-				setErrorMessage(response.message)
-				return
-			}
-
-			if (response && response.data && response.data.status === 'successful') {
-				console.log('TCL: fetchData -> hasFetchedSuccessfully', hasFetchedSuccessfully)
-				if (!hasFetchedSuccessfully) {
-					setFeedData([...feedDataQueue, ...response.data.payload])
-				} else {
-					setFeedDataQueue([...feedDataQueue, ...response.data.payload])
-				}
-
-				setHasFetchedSuccessfully(true)
-			}
+			setHasFetchedSuccessfully(true)
 		}
 
 		const timer = setInterval(() => {
-			fetchData()
+			fetchData({ setHasError, setHasFetchedSuccessfully, setData: handleRefreshDataSet, hasFetchedSuccessfully })
 		}, 5000)
 
 		return () => clearTimeout(timer)
@@ -84,8 +63,6 @@ function useFeed() {
 	return {
 		feedData,
 		hasError,
-		errorStatus,
-		errorMessage,
 		feedDataQueue,
 		handleViewMore,
 		hasFetchedSuccessfully,
