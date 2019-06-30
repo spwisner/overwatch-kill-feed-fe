@@ -23,10 +23,9 @@ const DamageNumber = styled.span`
 const propTypes = {
 	children: node.isRequired,
 	damage: number.isRequired,
-	method: string.isRequired,
 }
 
-function ActionIndicator({ damage, method, children }) {
+function ActionIndicator({ damage, children }) {
 	return (
 		<ActionContainer>
 			<DamageNumber damage={damage}>{damage}</DamageNumber>
