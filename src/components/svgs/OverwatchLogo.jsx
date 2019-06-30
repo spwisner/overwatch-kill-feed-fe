@@ -1,9 +1,9 @@
 import React, { memo } from 'react'
-import { string } from 'prop-types'
+import { number, string } from 'prop-types'
 
 const propTypes = {
-	width: string,
-	height: string,
+	width: number,
+	height: number,
 	innerFill: string,
 }
 

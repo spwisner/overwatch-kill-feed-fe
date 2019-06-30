@@ -1,8 +1,14 @@
+// external dependencies
 import React from 'react'
 import styled from '@emotion/styled'
-import OverwatchLogo from './svgs/OverwatchLogo'
-import { COLORS } from '../utils/styledHelpers'
 
+// utils
+import { COLORS } from '../../utils/styledHelpers'
+
+// components
+import OverwatchLogo from '../svgs/OverwatchLogo'
+
+// styled components
 const HeaderContainer = styled.div`
 	align-items: center;
 	display: flex;

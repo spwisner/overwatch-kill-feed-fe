@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.css'
-import Header from './components/Header'
+import Header from './components/Header/index'
+import Feed from './components/Feed/index'
 import { COLORS } from './utils/styledHelpers'
 import styled from '@emotion/styled'
 
@@ -17,6 +18,7 @@ function App() {
 			<HeaderWrap>
 				<Header />
 			</HeaderWrap>
+			<Feed />
 		</div>
 	)
 }
