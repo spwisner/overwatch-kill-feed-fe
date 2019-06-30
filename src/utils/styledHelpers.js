@@ -17,3 +17,11 @@ export const MQ = BREAKPOINTS.reduce(
 	}),
 	{}
 )
+
+export const COLORS = {
+	BORDER_GRAY: '#e5e3dc',
+	DARK_GRAY: '#353c42',
+	LIGHT_GRAY: '#F2F1ED',
+	GRAY: '#3B464A',
+	TEXT_GRAY: '#4b535d',
+}
