@@ -67,6 +67,7 @@ function Card({ sourcePlayerId, sourceCharacter, targetPlayerId, targetCharacter
 	const targetCharacterImgSrc = PLAYER_IMAGE_MAP[targetCharacter]
 	const sourceCharacterImgSrc = PLAYER_IMAGE_MAP[sourceCharacter]
 	const MethodComponent = METHOD_COMPONENT_MAP[method]
+
 	return (
 		<CardContainer>
 			<CardHeader>

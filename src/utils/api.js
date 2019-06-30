@@ -6,7 +6,7 @@ function handleError(e) {
 		// The request was made and the server responded with a status code
 		// that falls out of the range of 2xx
 
-		toast(`Error: ${e.response.data.message}. The feed will automatically refresh in 5 seconds`)
+		toast(`Error: ${e.response.data.message}. The feed will automatically refresh in 5 seconds.`)
 		return {
 			status: 'error',
 			message: e.response.data.message,
@@ -17,7 +17,7 @@ function handleError(e) {
 		// http.ClientRequest in node.js
 
 		toast(
-			`Error: Network error. Please check your connection and try again. The feed will automatically refresh in 5 seconds`
+			`Error: Network error. Please check your connection and try again. The feed will automatically refresh in 5 seconds.`
 		)
 
 		return {
@@ -27,7 +27,7 @@ function handleError(e) {
 	} else {
 		// Something happened in setting up the request that triggered an Error
 
-		toast(`An unknown error has occurred. The feed will automatically refresh in 5 seconds`)
+		toast(`An unknown error has occurred. The feed will automatically refresh in 5 seconds.`)
 
 		return {
 			status: 'error',

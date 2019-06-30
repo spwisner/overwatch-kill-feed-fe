@@ -1,11 +1,18 @@
+// external dependencies
 import React from 'react'
-import './App.css'
-import Header from './components/Header/index'
-import Feed from './components/Feed/index'
-import { COLORS } from './utils/styledHelpers'
 import styled from '@emotion/styled'
 import { ToastContainer } from 'react-toastify'
+
+// stylesheets
+import './App.css'
 import 'react-toastify/dist/ReactToastify.css'
+
+// components
+import Header from './components/Header/index'
+import Feed from './components/Feed/index'
+
+// utils
+import { COLORS } from './utils/styledHelpers'
 
 const HeaderWrap = styled.header`
 	background: ${COLORS.LIGHT_GRAY};
@@ -16,13 +23,13 @@ const HeaderWrap = styled.header`
 
 function App() {
 	return (
-		<div>
+		<>
 			<HeaderWrap>
 				<Header />
 			</HeaderWrap>
 			<ToastContainer />
 			<Feed />
-		</div>
+		</>
 	)
 }
 

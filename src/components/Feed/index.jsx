@@ -38,7 +38,7 @@ const ButtonContainer = styled.div`
 
 const LoadMoreButton = styled.button`
 	background-color: ${COLORS.YELLOW};
-	color: #fff;
+	color: ${COLORS.WHITE};
 	padding: 12px 24px;
 	font-size: 18px;
 	margin: 10px 0;
@@ -69,9 +69,11 @@ function Feed() {
 
 	return (
 		<>
-			{!hasError && hasFetchedSuccessfully && feedDataQueue.length === 0 && (
-				<EmptyQueue>Congrats! You're feed is all up to date.</EmptyQueue>
+			{/* if initial fetch successful and nothing in feed queue...  */}
+			{hasFetchedSuccessfully && feedDataQueue.length === 0 && (
+				<EmptyQueue>Congrats! Your feed is all up to date. Will attempt to update in 5 seconds.</EmptyQueue>
 			)}
+
 			{feedDataQueue.length > 0 && (
 				<ButtonContainer>
 					<LoadMoreButton onClick={() => handleViewMore()}>
