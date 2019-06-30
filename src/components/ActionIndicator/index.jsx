@@ -1,6 +1,6 @@
 // external dependencies
 import React from 'react'
-import { string, number, node } from 'prop-types'
+import { number, node } from 'prop-types'
 import styled from '@emotion/styled'
 
 // components

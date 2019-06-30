@@ -25,4 +25,5 @@ export const COLORS = {
 	GRAY: '#3B464A',
 	TEXT_GRAY: '#4b535d',
 	YELLOW: '#ff9c00',
+	YELLOW_HOVER: '#ffb033',
 }

@@ -4,6 +4,8 @@ import Header from './components/Header/index'
 import Feed from './components/Feed/index'
 import { COLORS } from './utils/styledHelpers'
 import styled from '@emotion/styled'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const HeaderWrap = styled.header`
 	background: ${COLORS.LIGHT_GRAY};
@@ -18,6 +20,7 @@ function App() {
 			<HeaderWrap>
 				<Header />
 			</HeaderWrap>
+			<ToastContainer />
 			<Feed />
 		</div>
 	)
