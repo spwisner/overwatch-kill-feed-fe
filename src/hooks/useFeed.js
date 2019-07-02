@@ -59,19 +59,18 @@ function useFeed() {
 		fetchData({ setHasError, setHasFetchedSuccessfully, setData: handleInitSet, hasFetchedSuccessfully })
 	}, [hasFetchedSuccessfully, setFeedData])
 
-	const handleFilter = useCallback(
-		val => {
-			if (val === 'all') {
-				setFilterData([])
-			} else {
-				const dataFiltered = filterDataByUser(feedData, val)
-				setFilterData(dataFiltered)
-			}
+	const handleFilter = (val, data) => {
+		const dataToFilter = data || feedData
 
-			setFilterValue(val)
-		},
-		[feedData]
-	)
+		if (val === 'all') {
+			setFilterData([])
+		} else {
+			const dataFiltered = filterDataByUser(dataToFilter, val)
+			setFilterData(dataFiltered)
+		}
+
+		return setFilterValue(val)
+	}
 
 	useEffect(() => {
 		const handleRefreshDataSet = response => {
@@ -93,7 +92,7 @@ function useFeed() {
 
 	const handleViewMore = () => {
 		setFeedData([...feedDataQueue, ...feedData])
-		handleFilter(filterValue)
+		handleFilter(filterValue, [...feedDataQueue, ...feedData])
 		setFeedDataQueue([])
 	}
 
