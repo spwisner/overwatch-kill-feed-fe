@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { getFeed } from '../utils/api'
 import { toast } from 'react-toastify'
 
