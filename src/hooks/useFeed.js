@@ -33,7 +33,7 @@ export const filterUniqueUsers = feedData => {
 	const sourceUsers = filterUniqueObjVals(feedData, 'source_player_id')
 	const targetUsers = filterUniqueObjVals(feedData, 'target_player_id')
 
-	return [...sourceUsers, ...targetUsers].filter((x, i, a) => a.indexOf(x) == i)
+	return [...sourceUsers, ...targetUsers].filter((x, i, a) => a.indexOf(x) === i)
 }
 
 export const filterDataByUser = (feedData, filterVal) => {
