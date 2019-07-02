@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { getFeed } from '../utils/api'
 import { toast } from 'react-toastify'
 
@@ -22,7 +22,29 @@ async function fetchData({ setHasError, setErrorStatus, setHasFetchedSuccessfull
 	}
 }
 
+export const filterUniqueObjVals = (feedData, keyVal) => {
+	return feedData.reduce((accumulator, currentItem) => {
+		const currentMethod = currentItem[keyVal]
+		return accumulator.indexOf(currentMethod) === -1 ? [...accumulator, currentMethod] : accumulator
+	}, [])
+}
+
+export const filterUniqueUsers = feedData => {
+	const sourceUsers = filterUniqueObjVals(feedData, 'source_player_id')
+	const targetUsers = filterUniqueObjVals(feedData, 'target_player_id')
+
+	return [...sourceUsers, ...targetUsers].filter((x, i, a) => a.indexOf(x) == i)
+}
+
+export const filterDataByUser = (feedData, filterVal) => {
+	return feedData.filter(item => {
+		return item.source_player_id === filterVal || item.target_player_id === filterVal
+	})
+}
+
 function useFeed() {
+	const [filterData, setFilterData] = useState([])
+	const [filterValue, setFilterValue] = useState('all')
 	const [feedData, setFeedData] = useState([])
 	const [feedDataQueue, setFeedDataQueue] = useState([])
 	const [hasError, setHasError] = useState(false)
@@ -36,6 +58,20 @@ function useFeed() {
 
 		fetchData({ setHasError, setHasFetchedSuccessfully, setData: handleInitSet, hasFetchedSuccessfully })
 	}, [hasFetchedSuccessfully, setFeedData])
+
+	const handleFilter = useCallback(
+		val => {
+			if (val === 'all') {
+				setFilterData([])
+			} else {
+				const dataFiltered = filterDataByUser(feedData, val)
+				setFilterData(dataFiltered)
+			}
+
+			setFilterValue(val)
+		},
+		[feedData]
+	)
 
 	useEffect(() => {
 		const handleRefreshDataSet = response => {
@@ -53,18 +89,22 @@ function useFeed() {
 		}, 5000)
 
 		return () => clearTimeout(timer)
-	}, [feedDataQueue, hasFetchedSuccessfully])
+	}, [feedDataQueue, filterValue, hasFetchedSuccessfully])
 
 	const handleViewMore = () => {
 		setFeedData([...feedDataQueue, ...feedData])
+		handleFilter(filterValue)
 		setFeedDataQueue([])
 	}
 
 	return {
 		feedData,
-		hasError,
 		feedDataQueue,
+		filterData,
+		filterValue,
+		handleFilter,
 		handleViewMore,
+		hasError,
 		hasFetchedSuccessfully,
 	}
 }

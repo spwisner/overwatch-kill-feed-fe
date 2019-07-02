@@ -7,6 +7,7 @@ import { COLORS } from '../../utils/styledHelpers'
 
 // components
 import Card from '../Card'
+import FilterMenu from '../FilterMenu'
 
 // hooks
 import useFeed from '../../hooks/useFeed'
@@ -50,9 +51,21 @@ const LoadMoreButton = styled.button`
 `
 
 function Feed() {
-	const { feedData, hasError, hasFetchedSuccessfully, feedDataQueue, handleViewMore } = useFeed()
+	const {
+		feedData,
+		feedDataQueue,
+		filterData,
+		filterValue,
+		handleFilter,
+		handleViewMore,
+		hasError,
+		hasFetchedSuccessfully,
+	} = useFeed()
 
-	const feed = feedData.map((item, i) => {
+	// if data filtered, use filterData instead of feedData
+	const displayData = filterData.length > 0 ? filterData : feedData
+
+	const feed = displayData.map((item, i) => {
 		const { source_player_id, source_character, target_player_id, target_character, method, damage } = item
 		return (
 			<Card
@@ -74,6 +87,10 @@ function Feed() {
 				<EmptyQueue>Congrats! Your feed is all up to date. Will attempt to update in 5 seconds.</EmptyQueue>
 			)}
 
+			{feedData && feedData.length > 0 && (
+				<FilterMenu feedData={feedData} handleFilter={handleFilter} filterValue={filterValue} />
+			)}
+
 			{feedDataQueue.length > 0 && (
 				<ButtonContainer>
 					<LoadMoreButton onClick={() => handleViewMore()}>
@@ -81,6 +98,7 @@ function Feed() {
 					</LoadMoreButton>
 				</ButtonContainer>
 			)}
+
 			{hasError && !hasFetchedSuccessfully && feedData.length === 0 ? (
 				<ErrorMessage>
 					An error has occurred on the initial load. The feed will automatically refresh in 5 seconds.
