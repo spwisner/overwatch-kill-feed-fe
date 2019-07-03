@@ -5,6 +5,7 @@ import styled from '@emotion/styled'
 
 // utils
 import { MQ } from '../../utils/styledHelpers'
+import { DAMAGE_THRESHOLD } from '../../utils/maps'
 
 // components
 import RightArrow from '../svgs/RightArrow'
@@ -26,7 +27,8 @@ const ActionContainer = styled.div`
 `
 
 const DamageNumber = styled.span`
-	color: ${({ damage }) => (damage > 65 ? 'red' : damage > 30 ? 'orange' : 'green')};
+	color: ${({ damage }) =>
+		damage >= DAMAGE_THRESHOLD.HEAVY ? 'red' : damage >= DAMAGE_THRESHOLD.MEDIUM ? 'orange' : 'green'};
 `
 
 const ArrowContainer = styled.div`

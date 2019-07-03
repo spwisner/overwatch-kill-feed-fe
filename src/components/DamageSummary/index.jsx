@@ -3,6 +3,8 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { number } from 'prop-types'
 
+import { DAMAGE_THRESHOLD } from '../../utils/maps'
+
 const propTypes = {
 	damage: number.isRequired,
 }
@@ -13,9 +15,9 @@ const SummaryText = styled.div`
 
 function DamageSummary({ damage }) {
 	const calculateSummary = damage => {
-		if (damage < 25) {
+		if (damage < DAMAGE_THRESHOLD.MEDIUM) {
 			return 'Light'
-		} else if (damage < 75) {
+		} else if (damage < DAMAGE_THRESHOLD.HEAVY) {
 			return 'Medium'
 		} else {
 			return 'Heavy'

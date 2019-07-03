@@ -19,3 +19,9 @@ export const METHOD_COMPONENT_MAP = {
 	'Primal Rage': PrimalRange,
 	'Tesla Cannon': TeslaCannon,
 }
+
+export const DAMAGE_THRESHOLD = {
+	LIGHT: 0,
+	MEDIUM: 25,
+	HEAVY: 60,
+}
